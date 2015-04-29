@@ -27,3 +27,8 @@ module Spree
     include_context "behaves as translatable"
   end
 end
+
+RSpec.describe Spree::PaymentMethod, type: :model do
+  include_context 'behaves as translatable'
+end
+
