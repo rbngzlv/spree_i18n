@@ -7,6 +7,7 @@ module SpreeI18n
 
     class_methods do
       def ransack(params = {}, options = {})
+        params = {} if params.nil?
         names = params.keys
 
         names.each do |n|
