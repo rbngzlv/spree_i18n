@@ -249,6 +249,37 @@ RSpec.feature "Translations", :js do
     end
   end
 
+  context "tax rates" do
+    given(:language) { Spree.t(:'i18n.this_file_language', locale: :it) }
+    given!(:tax_rate) { create(:tax_rate) }
+
+    background do
+      reset_spree_preferences
+      SpreeI18n::Config.available_locales = [:en, :it]
+      SpreeI18n::Config.supported_locales = [:en, :it]
+    end
+
+    scenario 'saves translated attributes properly' do
+      visit spree.admin_tax_rates_path
+      find('.fa-flag').click
+
+      within("#attr_fields .name.en.odd") { fill_in_name "Reduced" }
+      within("#attr_fields .name.it.odd") { fill_in_name "Ridotta" }
+      click_on "Update"
+
+      change_locale
+      visit spree.admin_tax_rates_path
+      expect(page).to have_content('Ridotta')
+    end
+
+    it "render edit route properly" do
+      visit spree.admin_tax_rates_path
+      find('.fa-flag').click
+      find('.fa-remove').click
+      expect(page).to have_css('.page-title')
+    end
+  end
+
   context "localization settings" do
     given(:language) { Spree.t(:'i18n.this_file_language', locale: 'de') }
     given(:french) { Spree.t(:'i18n.this_file_language', locale: 'fr') }
