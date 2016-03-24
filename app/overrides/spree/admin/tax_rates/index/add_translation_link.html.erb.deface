@@ -1,0 +1,3 @@
+<!-- insert_bottom 'td.actions' -->
+<%= link_to '', admin_translations_path('tax_rates', tax_rate.id),
+        class: 'icon_link with-tip fa fa-flag no-text', title: Spree.t(:'i18n.translations') %>
